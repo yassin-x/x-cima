@@ -1,3 +1,4 @@
+"use client";
 import MainHeading from "@/components/MainHeading";
 import { MovieType } from "@/types/app";
 import React from "react";
@@ -9,7 +10,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import Image from "next/image";
-
+import { motion } from "framer-motion";
 export default function Movies({
   data,
   title,
@@ -58,7 +59,13 @@ export default function Movies({
                 key={movie.id}
                 className="xs:basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4"
               >
-                <div className="relative aspect-[2/3] overflow-hidden rounded-lg shadow-md group">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5 }}
+                  className="relative aspect-[2/3] overflow-hidden rounded-lg shadow-md group"
+                >
                   <Image
                     src={`${process.env.NEXT_PUBLIC_MOVIE_IMAGESURL}${movie.poster_path}`}
                     alt={`${movie.title || movie.name} Poster`}
@@ -75,7 +82,7 @@ export default function Movies({
                       {getGenres(movie.genre_ids)}
                     </p>
                   </div>
-                </div>
+                </motion.div>
               </CarouselItem>
             ))}
           </CarouselContent>

@@ -1,13 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { MovieType } from "@/types/app";
 import React from "react";
 import Movies from "../_components/Movies";
 
 export default async function SearchPage({
   searchParams,
-}: {
-  searchParams: { name?: string };
-}) {
-  const query = searchParams.name;
+}: { searchParams: any }) {
+  const query = typeof searchParams?.name === "string" ? searchParams.name : "";
+
   if (!query) return <p className="text-center mt-12">No Data Found</p>;
 
   const res = await fetch(
@@ -23,6 +23,7 @@ export default async function SearchPage({
   const filteredResults = data.results.filter(
     (item: MovieType) => item.media_type === "movie" || item.media_type === "tv"
   );
+
   return (
     <main className="mt-12 md:mt-14">
       <Movies title="Search Results" data={filteredResults} />

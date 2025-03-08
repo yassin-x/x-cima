@@ -4,7 +4,7 @@ import { Pagination } from "antd";
 import { LoaderIcon } from "lucide-react";
 import Image from "next/image";
 import React from "react";
-
+import { motion } from "framer-motion";
 export default function MoviesPage() {
   const [data, setData] = React.useState<MovieListType>();
   const [loading, setLoading] = React.useState(false);
@@ -66,12 +66,19 @@ export default function MoviesPage() {
     <main className="mt-12 md:mt-14">
       <div className="container grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 py-6 md:py-8">
         {data?.results.map((item) => (
-          <div key={item.id}>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.5 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            key={item.id}
+          >
             <div className="relative aspect-[2/3] overflow-hidden rounded-lg shadow-md group">
               <Image
                 src={`${process.env.NEXT_PUBLIC_MOVIE_IMAGESURL}${item.poster_path}`}
                 alt={`${item.title || item.name} Poster`}
                 fill
+                priority
                 loading="lazy"
                 className="object-cover rounded-2xl transition-transform duration-300"
               />
@@ -84,7 +91,7 @@ export default function MoviesPage() {
                 </p>
               </div>
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
       <div className="container flex justify-center items-center py-4">
