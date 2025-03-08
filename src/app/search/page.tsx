@@ -2,13 +2,13 @@ import { MovieType } from "@/types/app";
 import React from "react";
 import Movies from "../_components/Movies";
 
-interface SearchPageProps {
+export default async function SearchPage({
+  searchParams,
+}: {
   searchParams: { name?: string };
-}
-
-export default async function SearchPage({ searchParams }: SearchPageProps) {
+}) {
   const query = searchParams.name;
-  if (!query) return <p className="text-center mt-12">يرجى إدخال كلمة بحث</p>;
+  if (!query) return <p className="text-center mt-12">No Data Found</p>;
 
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_MOVIE_BASEURL}/search/multi?query=${query}&api_key=${process.env.NEXT_PUBLIC_API_KEY}`
